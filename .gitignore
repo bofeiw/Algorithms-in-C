@@ -1,4 +1,3 @@
 *.o
 *.out
 .DS_Store
-test*
