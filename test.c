@@ -3,8 +3,7 @@
 #include <assert.h>
 #include <time.h>
 
-#include "insertionSort.c"
-#include "quickSort.c"
+#include "sort.h"
 
 /*
 run a random test with given sort function, generate a random
@@ -53,6 +52,12 @@ int* sameArray(int n);
 int main(void) {
 	testRandom(quickSort, 100);
 	testAllSame(quickSort, 100);
+	testRandom(insertionSort, 100);
+	testAllSame(insertionSort, 100);
+	testRandom(selectionSort, 100);
+	testAllSame(selectionSort, 100);
+	testRandom(bubbleSort, 100);
+	testAllSame(bubbleSort, 100);
 
 	printf("All tests passed!\n");
 }
