@@ -30,6 +30,11 @@ elements are all the same, with arraySize elements assert all fails
 void testAllSame(void (*sort)(int array[], int n), int arraySize);
 
 /*
+run a test with given sort function, with given array
+*/
+void testWithArray(void (*sort)(int array[], int n), int arraySize, int array[]);
+
+/*
 return is the array sorted
 */
 int isSorted(int array[], int n);
@@ -38,6 +43,11 @@ int isSorted(int array[], int n);
 assert the array is sorted
 */
 void assertSorted(int array[], int n);
+
+/*
+test a sort function
+*/
+void testSort(void (*sort)(int array[], int n));
 
 /*
 generate a random array with size n
@@ -49,17 +59,34 @@ generate an array with size n, whose elements are all the same
 */
 int* sameArray(int n);
 
+/*
+generate an array with size n, whose elements are sorted
+*/
+int* sortedArray(int n);
+
+/*
+generate an array with size n, whose elements inverse sorted
+*/
+int* sortedInverseArray(int n);
+
 int main(void) {
-	testRandom(quickSort, 100);
-	testAllSame(quickSort, 100);
-	testRandom(insertionSort, 100);
-	testAllSame(insertionSort, 100);
-	testRandom(selectionSort, 100);
-	testAllSame(selectionSort, 100);
-	testRandom(bubbleSort, 100);
-	testAllSame(bubbleSort, 100);
+	printf("Start testing...\n");
+
+	testSort(quickSort);
+	testSort(insertionSort);
+	testSort(selectionSort);
+	testSort(bubbleSort);
+	testSort(mergeSort);
 
 	printf("All tests passed!\n");
+}
+
+void testSort(void (*sort)(int array[], int n)) {
+	// run random tests on sort
+	testRandom(sort, 1000);
+
+	// run all same tests on sort
+	testAllSame(sort, 1000);
 }
 
 int* randomArray(int n) {
@@ -88,20 +115,57 @@ int isSorted(int array[], int n) {
 	return 1;
 }
 
+// comparison for sorted
+int cmp(const void * a, const void * b) {
+   return *(int*)a - *(int*)b;
+}
+
+int* sortedArray(int n) {
+	int* array = randomArray(n);
+	qsort(array, n, sizeof(int), cmp);
+	return array;
+}
+
+// comparison for inverse sorted
+int cmpInverse(const void * a, const void * b) {
+   return *(int*)b - *(int*)a;
+}
+
+int* sortedInverseArray(int n) {
+	int* array = randomArray(n);
+	qsort(array, n, sizeof(int), cmpInverse);
+	return array;
+}
+
 void assertSorted(int array[], int n) {
 	assert(isSorted(array, n));
 }
 
 void testRandom(void (*sort)(int array[], int n), int arraySize) {
 	int* array = randomArray(arraySize);
-	sort(array, arraySize);
-	assertSorted(array, arraySize);
+	testWithArray(sort, arraySize, array);
 	free(array);
 }
 
 void testAllSame(void (*sort)(int array[], int n), int arraySize) {
 	int* array = sameArray(arraySize);
+	testWithArray(sort, arraySize, array);
+	free(array);
+}
+
+void testSorted(void (*sort)(int array[], int n), int arraySize) {
+	int* array = sortedArray(arraySize);
+	testWithArray(sort, arraySize, array);
+	free(array);
+}
+
+void testSortedInverse(void (*sort)(int array[], int n), int arraySize) {
+	int* array = sortedInverseArray(arraySize);
+	testWithArray(sort, arraySize, array);
+	free(array);
+}
+
+void testWithArray(void (*sort)(int array[], int n), int arraySize, int array[]) {
 	sort(array, arraySize);
 	assertSorted(array, arraySize);
-	free(array);
 }

@@ -6,6 +6,63 @@ void swap(int* a, int* b) {
 	*b = temp;
 }
 
+/*********** merge sort **********/
+
+// merges array2 into array1
+void merge(int array1[], int array2[], int n1, int n2, int auxiliary[]) {
+	int i, j, k;
+
+	// copy array1 to auxiliary
+	for (i = 0; i < n1; ++i) {
+		auxiliary[i] = array1[i];
+	}
+
+	i = 0;	// index of auxiliary
+	j = 0;	// index of array2
+	k = 0;	// index of array1
+	// keep coping the smallest element to array1
+	// until one of the array is empty
+	while (i < n1 && j < n2) {
+		if (auxiliary[i] < array2[j]) {
+			array1[k] = auxiliary[i];
+			++i;
+		} else {
+			array1[k] = array2[j];
+			++j;
+		}
+		++k;
+	}
+
+	// copy the remaining elements of auxiliary to array1
+	while (i < n1) {
+		array1[k] = auxiliary[i];
+		++k;
+		++i;
+	}
+
+	// copy the remaining elements of array2 to array1
+	while (i < n1) {
+		array1[k] = array2[j];
+		++k;
+		++j;
+	}
+}
+
+// merge sort with auxiliary array allocated
+void mergeSortRecursive(int array[], int n, int auxiliary[]) {
+	if (n > 1) {
+		int mid = n / 2;
+		mergeSortRecursive(array, mid, auxiliary);
+		mergeSortRecursive(array + mid, n - mid, auxiliary);
+		merge(array, array + mid, mid, n - mid, auxiliary);
+	}
+}
+
+void mergeSort(int array[], int n) {
+	int auxiliary[n];
+	mergeSortRecursive(array, n, auxiliary);
+}
+
 /*********** insertion sort **********/
 void insertionSort(int array[], int n) {
 	int sorted, i, curr;
