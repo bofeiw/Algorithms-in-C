@@ -47,7 +47,7 @@ void assertSorted(int array[], int n);
 /*
 test a sort function
 */
-void testSort(void (*sort)(int array[], int n));
+void testSort(void (*sort)(int array[], int n), char* name);
 
 /*
 generate a random array with size n
@@ -72,21 +72,36 @@ int* sortedInverseArray(int n);
 int main(void) {
 	printf("Start testing...\n");
 
-	testSort(quickSort);
-	testSort(insertionSort);
-	testSort(selectionSort);
-	testSort(bubbleSort);
-	testSort(mergeSort);
+	testSort(quickSort, "quickSort");
+	testSort(insertionSort, "insertionSort");
+	testSort(selectionSort, "selectionSort");
+	testSort(bubbleSort, "bubbleSort");
+	testSort(mergeSort, "mergeSort");
+	testSort(heapSort, "heapSort");
 
 	printf("All tests passed!\n");
 }
 
-void testSort(void (*sort)(int array[], int n)) {
+void testSort(void (*sort)(int array[], int n), char* name) {
+	printf("testing %s...\n", name);
+
 	// run random tests on sort
+	printf("\ttestRandom on %s\n", name);
 	testRandom(sort, 1000);
 
 	// run all same tests on sort
+	printf("\testAllSame on %s\n", name);
 	testAllSame(sort, 1000);
+
+	// run sorted tests on sort
+	printf("\testSorted on %s\n", name);
+	testSorted(sort, 1000);
+
+	// run inverse sorted tests on sort
+	printf("\testSortedInverse on %s\n", name);
+	testSortedInverse(sort, 1000);
+
+	printf("\t%s passed!\n", name);
 }
 
 int* randomArray(int n) {

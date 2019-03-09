@@ -1,12 +1,62 @@
 #include "sort.h"
 
+// essential to most sorting algorithms
+// if this is incorrect, most algo will behave very strange
+// swap a and b
 void swap(int* a, int* b) {
 	int temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-/*********** merge sort **********/
+/****************************** heap sort *****************************/
+
+// Thanks to greeksforgreeks, which helps a lot in heap sort
+// https://www.geeksforgeeks.org/heap-sort/
+
+// max heap, number at i must be larger than its children
+void heapify(int array[], int n, int i) {
+	int maxIndex = i;
+	int leftChildIndex = 2 * i + 1;
+	int rightChildIndex = leftChildIndex + 1;
+
+	// check if left child is larger
+	if (leftChildIndex < n && array[maxIndex] < array[leftChildIndex]) {
+		maxIndex = leftChildIndex;
+	}
+
+	// check if right child is larger
+	if (rightChildIndex < n && array[maxIndex] < array[rightChildIndex]) {
+		maxIndex = rightChildIndex;
+	}
+
+	// if number at i is not max, swap with max and heapify number at max
+	if (maxIndex != i) {
+		swap(array + maxIndex, array + i);
+		heapify(array, n, maxIndex);
+	}
+}
+
+// ascending order, build a max heap
+void buildHeap(int array[], int n) {
+	int i;
+	// heapify every elements from the last leaf to 0 inclusive
+	// no need to heapify nodes with no children
+	for (i = n / 2 - 1; i >= 0; --i) {
+		heapify(array, n, i);
+	}
+}
+
+void heapSort(int array[], int n) {
+	buildHeap(array, n);
+	while (n > 1) {
+		--n;
+		swap(array, array + n);
+		heapify(array, n, 0);
+	}
+}
+
+/****************************** merge sort *****************************/
 
 // merges array2 into array1
 // n1 n2: lengths or array1 array2
@@ -73,7 +123,7 @@ void mergeSort(int array[], int n) {
 	mergeSortRecursive(array, n, auxiliary);
 }
 
-/*********** insertion sort **********/
+/****************************** insertion sort *****************************/
 void insertionSort(int array[], int n) {
 	int sorted, i, curr;
 	// loop through 1..n, where element at 0 is 
@@ -96,7 +146,7 @@ void insertionSort(int array[], int n) {
 	}
 }
 
-/*********** quick sort **********/
+/****************************** quick sort *****************************/
 
 // first part is smaller
 // second part is equal
@@ -154,7 +204,7 @@ void quickSort(int array[], int n) {
 	}
 }
 
-/*********** selection sort **********/
+/****************************** selection sort *****************************/
 
 void selectionSort(int array[], int n) {
 	int sorted, i, minIndex;
@@ -176,7 +226,7 @@ void selectionSort(int array[], int n) {
 	}
 }
 
-/*********** bubble sort **********/
+/****************************** bubble sort *****************************/
 
 void bubbleSort(int array[], int n) {
 	int i, j;
