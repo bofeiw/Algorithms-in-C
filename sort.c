@@ -9,6 +9,7 @@ void swap(int* a, int* b) {
 /*********** merge sort **********/
 
 // merges array2 into array1
+// n1 n2: lengths or array1 array2
 void merge(int array1[], int array2[], int n1, int n2, int auxiliary[]) {
 	int i, j, k;
 
@@ -50,16 +51,25 @@ void merge(int array1[], int array2[], int n1, int n2, int auxiliary[]) {
 
 // merge sort with auxiliary array allocated
 void mergeSortRecursive(int array[], int n, int auxiliary[]) {
+	// array with size 1 or less is sorted
 	if (n > 1) {
 		int mid = n / 2;
+		// recursively sort the first half
 		mergeSortRecursive(array, mid, auxiliary);
+
+		// recursively sort the second half
 		mergeSortRecursive(array + mid, n - mid, auxiliary);
+
+		// merge the sorted two halves
 		merge(array, array + mid, mid, n - mid, auxiliary);
 	}
 }
 
 void mergeSort(int array[], int n) {
+	// create an auxiliary array
 	int auxiliary[n];
+
+	// call the real merge sort
 	mergeSortRecursive(array, n, auxiliary);
 }
 
