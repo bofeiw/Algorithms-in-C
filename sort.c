@@ -243,3 +243,88 @@ void bubbleSort(int array[], int n) {
 		}
 	}
 }
+
+/****************************** intro sort *****************************/
+
+// this function uses heap sort and partition from quick sort
+// for details of this algorithm, visit:
+// https://en.wikipedia.org/wiki/Introsort
+void introSortRecursive(int array[], int n, int maxDepth) {
+	if (n <= 1) {
+		return;
+	} else if (maxDepth <= 0) {
+		heapSort(array, n);
+	} else {
+		int firstEqual;
+		int firstGreater;
+		partition(array, n, &firstEqual, &firstGreater);
+		introSortRecursive(array, firstEqual, maxDepth - 1);
+		introSortRecursive(array + firstGreater, n - firstGreater, maxDepth - 1);
+	}
+}
+
+// swithes between quick sort and heap sort
+// when the recursion depth < log array length, use quick sort
+// otherwise use heap sort
+void introSort(int array[], int n) {
+	int maxDepth = log(n) * 2;
+	introSortRecursive(array, n, maxDepth);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// feel free to add!
