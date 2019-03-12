@@ -1,12 +1,16 @@
 #include "sort.h"
 
+// swap a and b
 // essential to most sorting algorithms
 // if this is incorrect, most algo will behave very strange
-// swap a and b
-void swap(int* a, int* b) {
-	int temp = *a;
-	*a = *b;
-	*b = temp;
+// this swap algorithm is done by xor, for more details, visit:
+// https://en.wikipedia.org/wiki/XOR_swap_algorithm
+void swap(int* x, int* y) {
+	if (x != y) {
+		*x ^= *y;
+		*y ^= *x;
+		*x ^= *y;
+	}
 }
 
 /****************************** heap sort *****************************/
