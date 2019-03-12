@@ -79,6 +79,7 @@ int main(void) {
 	testSort(mergeSort, "mergeSort");
 	testSort(heapSort, "heapSort");
 	testSort(introSort, "introSort");
+	testSort(timSort, "timSort");
 
 	printf("All tests passed!\n");
 }

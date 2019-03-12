@@ -271,7 +271,36 @@ void introSort(int array[], int n) {
 	introSortRecursive(array, n, maxDepth);
 }
 
+/****************************** tim sort *****************************/
 
+#define SIZE_RUN 32
+
+void timSort(int array[], int n) {
+	int auxiliary[n];
+	int i, size;
+
+	// first sort all runs using insertion sort
+	for (i = 0; i < n; i += SIZE_RUN) {
+		if (i + SIZE_RUN <= n) {
+			insertionSort(array + i, SIZE_RUN);
+		} else {
+			// last part might not be exactly of size run
+			insertionSort(array + i, n - i);
+		}
+	}
+
+	// then merge those runs 
+	for (size = SIZE_RUN; size < n; size *= 2) {
+		for (i = 0; i < n; i += 2 * size) {
+			int rightSize = size;
+			if (i + 2 * size > n) {
+				// exceeds limit
+				rightSize = n - i - size;
+			}
+			merge(array + i, array + i + size, size, rightSize, auxiliary);
+		}
+	}
+}
 
 
 
