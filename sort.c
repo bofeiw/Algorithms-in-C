@@ -275,11 +275,20 @@ void introSort(int array[], int n) {
 
 #define SIZE_RUN 32
 
+/* 
+this algorithms is O(n log n), proof is in the comments below
+*/
 void timSort(int array[], int n) {
 	int auxiliary[n];
 	int i, size;
 
 	// first sort all runs using insertion sort
+	// this step is O(n)
+	// proof:
+	//  loop (n/SIZE_RUN) times
+	//  each loop is O(SIZE_RUN^2) using insertion sort
+	//  overall is O(SIZE_RUN^2 * n/SIZE_RUN) = O(n * SIZE_RUN)
+	//  since SIZE_RUN is a constant, it is O(n)
 	for (i = 0; i < n; i += SIZE_RUN) {
 		if (i + SIZE_RUN <= n) {
 			insertionSort(array + i, SIZE_RUN);
@@ -290,6 +299,12 @@ void timSort(int array[], int n) {
 	}
 
 	// then merge those runs 
+	// this step is O(n log n)
+	// proof:
+	//  outer loop log(n/SIZE_RUN) times
+	//  inner loop is O(n) using merge
+	//  overall is O(n log(n/SIZE_RUN))
+	//  simce SIZE_RUN is a constant, it is O(n log n)
 	for (size = SIZE_RUN; size < n; size *= 2) {
 		for (i = 0; i < n; i += 2 * size) {
 			int rightSize = size;
@@ -300,6 +315,8 @@ void timSort(int array[], int n) {
 			merge(array + i, array + i + size, size, rightSize, auxiliary);
 		}
 	}
+
+	// combining two parts, it is O(n + n*log n) which is O(n log n)
 }
 
 
