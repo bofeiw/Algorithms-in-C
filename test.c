@@ -80,6 +80,7 @@ int main(void) {
 	testSort(heapSort, "heapSort");
 	testSort(introSort, "introSort");
 	testSort(timSort, "timSort");
+	testSort(shellSort, "shellSort");
 
 	printf("All tests passed!\n");
 }
@@ -92,15 +93,15 @@ void testSort(void (*sort)(int array[], int n), char* name) {
 	testRandom(sort, 1000);
 
 	// run all same tests on sort
-	printf("\testAllSame on %s\n", name);
+	printf("\ttestAllSame on %s\n", name);
 	testAllSame(sort, 1000);
 
 	// run sorted tests on sort
-	printf("\testSorted on %s\n", name);
+	printf("\ttestSorted on %s\n", name);
 	testSorted(sort, 1000);
 
 	// run inverse sorted tests on sort
-	printf("\testSortedInverse on %s\n", name);
+	printf("\ttestSortedInverse on %s\n", name);
 	testSortedInverse(sort, 1000);
 
 	printf("\t%s passed!\n", name);
