@@ -328,7 +328,7 @@ void timSort(int array[], int n) {
 // The complexity of  shell sort heavily depends on the gap sequence
 // This gap sequence is O(n*(log n)^2)
 // Author: Pratt, 1971, OEIS: A003586
-// visit https://en.wikipedia.org/wiki/Shellsort for more information
+// visit https://oeis.org/A003586 for more information
 #define N_GAPS 55
 int GAPS[] = {1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 27, 32, 36, 48, 54, 64, 72, 81, 
 	96, 108, 128, 144, 162, 192, 216, 243, 256, 288, 324, 384, 432, 486, 512, 576, 
