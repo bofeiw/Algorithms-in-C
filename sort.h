@@ -11,5 +11,6 @@ void mergeSort(int array[], int n);
 void heapSort(int array[], int n);
 void introSort(int array[], int n);
 void timSort(int array[], int n);
+void shellSort(int array[], int n);
 
 #endif

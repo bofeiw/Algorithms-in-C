@@ -323,6 +323,44 @@ void timSort(int array[], int n) {
 	// combining two parts, it is O(n + n*log n) which is O(n log n)
 }
 
+/****************************** shell sort *****************************/
+
+// The complexity of  shell sort heavily depends on the gap sequence
+// This gap sequence is O(n*(log n)^2)
+// Author: Pratt, 1971, OEIS: A003586
+// visit https://en.wikipedia.org/wiki/Shellsort for more information
+#define N_GAPS 55
+int GAPS[] = {1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 27, 32, 36, 48, 54, 64, 72, 81, 
+	96, 108, 128, 144, 162, 192, 216, 243, 256, 288, 324, 384, 432, 486, 512, 576, 
+	648, 729, 768, 864, 972, 1024, 1152, 1296, 1458, 1536, 1728, 1944, 2048, 2187, 
+	2304, 2592, 2916, 3072, 3456, 3888};
+
+void shellSort(int array[], int n) {
+	int sorted, i, curr, gapIndex, gap;
+
+	// do multiple insertion sorts, steps differ, all in GAPS
+	for (gapIndex = N_GAPS - 1; gapIndex >= 0; --gapIndex) {
+		gap = GAPS[gapIndex];
+		// this inner for loop is just an insertion sort with a different step
+		// loop through gap..n with step gap
+		for (sorted = gap; sorted < n; sorted += gap) {
+			// record current element to be shifted
+			curr = array[sorted];
+
+			// loop through sorted..0 unless
+			// a smaller element than current is found
+			i = sorted;
+			while (i - gap >= 0 && array[i - gap] > curr) {
+				// right shift element gap steps
+				array[i] = array[i - gap];
+				i -= gap;
+			}
+			// put the element being shifted at 
+			// the correct place
+			array[i] = curr;
+		}
+	}
+}
 
 
 /****************************** Algorithms are fun!    *****************************/
