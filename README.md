@@ -5,3 +5,6 @@ Currently, this project is concentrating on writing sorting algorithms. So you a
 
 ## All the sorting algorithms
 [Link to Wiki](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms)
+
+## TODO
+- [Cube Sort](https://en.wikipedia.org/wiki/Cubesort): need time
